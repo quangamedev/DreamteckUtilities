@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.IO;
 
 namespace Dreamteck
@@ -8,8 +8,11 @@ namespace Dreamteck
         private static bool directoryIsValid = false;
 
         //Attempts to find the input directory pattern inside a given directory and if it fails, proceeds with looking up all subfolders
-        public static string FindFolder(string dir, string folderPattern)
+        public static string FindFolder(string dir, string folderPattern, bool checkPackageCache = true)
         {
+            if (checkPackageCache)
+                dir = dir.Replace("Assets", "Library/PackageCache");
+            
             if (folderPattern.StartsWith("/"))
                 folderPattern = folderPattern.Substring(1);
 
@@ -29,7 +32,7 @@ namespace Dreamteck
                 foreach (string d in Directory.GetDirectories(dir))
                 {
                     DirectoryInfo dirInfo = new DirectoryInfo(d);
-                    if (dirInfo.Name == folders[0])
+                    if (dirInfo.Name == folders[0] || (checkPackageCache && dirInfo.Name.Contains(folders[0])))
                     {
                         foundDir = d;
                         string searchDir = FindFolder(d, string.Join("/", folders, 1, folders.Length - 1));

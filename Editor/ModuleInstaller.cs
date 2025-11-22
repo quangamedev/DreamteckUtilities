@@ -55,7 +55,7 @@ namespace Dreamteck.Editor
 
         public void Install()
         {
-            string globalPath = ResourceUtility.FindFolder(Application.dataPath, DREAMTECK_FOLDER_NAME + "/" + _packageDirectory);
+            string globalPath = ResourceUtility.FindFolder(Application.dataPath, _packageDirectory);
             if (!Directory.Exists(globalPath))
             {
                 EditorUtility.DisplayDialog("Missing Package", "Package directory not found: " + _packageDirectory, "OK");
@@ -96,7 +96,7 @@ namespace Dreamteck.Editor
 
             for (int i = 0; i < _uninstallDirectories.Count; i++)
             {
-                string globalPath = ResourceUtility.FindFolder(Application.dataPath, DREAMTECK_FOLDER_NAME + "/" + _uninstallDirectories[i]);
+                string globalPath = ResourceUtility.FindFolder(Application.dataPath, DREAMTECK_FOLDER_NAME + "/" + _uninstallDirectories[i], false);
                 string relativePath = "Assets" + globalPath.Substring(Application.dataPath.Length);
                 Debug.Log("Uninstalling " + relativePath);
                 AssetDatabase.DeleteAsset(relativePath);
