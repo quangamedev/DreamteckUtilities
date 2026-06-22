@@ -32,7 +32,7 @@ namespace Dreamteck
             {
                 if (array[i].Equals(value)) return i;
             }
-            return 0;
+            return -1;
         }
         public static void Insert<T>(ref T[] array, int index, T item)
         {
@@ -57,6 +57,13 @@ namespace Dreamteck
                 else if (i > index) newArray[i-1] = array[i];
             }
             array = newArray;
+        }
+
+        public static void Remove<T>(ref T[] array, T value)
+        {
+            var index = IndexOf(array, value);
+            if (index == -1) return;
+            RemoveAt(ref array, index);
         }
 
         public static void ForEach<T>(this T[] source, Action<T> onLoop)
